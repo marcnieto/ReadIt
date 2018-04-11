@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1E088CA8207E037500FDAB23 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CA7207E037500FDAB23 /* Extension.swift */; };
+		1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */; };
 		1E9D3B21207CACBD00CEC02F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D3B20207CACBD00CEC02F /* AppDelegate.swift */; };
 		1E9D3B23207CACBD00CEC02F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D3B22207CACBD00CEC02F /* ViewController.swift */; };
 		1E9D3B26207CACBD00CEC02F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D3B24207CACBD00CEC02F /* Main.storyboard */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1E088CA7207E037500FDAB23 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
 		1E9D3B1D207CACBD00CEC02F /* ReadIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E9D3B20207CACBD00CEC02F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E9D3B22207CACBD00CEC02F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +43,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1E424F08207DE84C00F2FF9A /* Listing */ = {
+			isa = PBXGroup;
+			children = (
+				1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */,
+			);
+			path = Listing;
+			sourceTree = "<group>";
+		};
 		1E9D3B14207CACBC00CEC02F = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +70,7 @@
 		1E9D3B1F207CACBD00CEC02F /* ReadIt */ = {
 			isa = PBXGroup;
 			children = (
+				1E424F08207DE84C00F2FF9A /* Listing */,
 				1E9D3B32207CADBD00CEC02F /* App */,
 				1E9D3B34207CAE0500CEC02F /* Model */,
 				1E9D3B33207CADE000CEC02F /* Support */,
@@ -82,6 +95,7 @@
 		1E9D3B33207CADE000CEC02F /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				1E088CA7207E037500FDAB23 /* Extension.swift */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -167,6 +181,8 @@
 			files = (
 				1E9D3B23207CACBD00CEC02F /* ViewController.swift in Sources */,
 				1E9D3B21207CACBD00CEC02F /* AppDelegate.swift in Sources */,
+				1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */,
+				1E088CA8207E037500FDAB23 /* Extension.swift in Sources */,
 				1E9D3B38207CB06700CEC02F /* Listing.swift in Sources */,
 				1E9D3B36207CAE8100CEC02F /* SessionManager.swift in Sources */,
 			);
