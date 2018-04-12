@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="landscape">
+    <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,16 +15,16 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ReadIt" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="RTb-Al-CY4">
-                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewLayout key="collectionViewLayout" id="b4Z-1m-jcf" customClass="TileCollectionViewLayout" customModule="ReadIt" customModuleProvider="target"/>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listingCollectionViewCell" id="xQK-v7-lmv" customClass="ListingCollectionViewCell" customModule="ReadIt" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="188" height="256"/>
+                                        <rect key="frame" x="93.5" y="0.0" width="188" height="256"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="188" height="256"/>
@@ -59,7 +59,7 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="ahP-fB-e8Y"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="15"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -130,36 +130,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="140" y="126.38680659670166"/>
-        </scene>
-        <!--Image View Controller-->
-        <scene sceneID="iBy-Dt-J6X">
-            <objects>
-                <viewController storyboardIdentifier="imageViewController" id="KAP-aP-cC9" customClass="ImageViewController" customModule="ReadIt" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wzu-Rp-icE">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Dfu-Pt-Tp9">
-                                <rect key="frame" x="5" y="5" width="290" height="290"/>
-                            </imageView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="Dfu-Pt-Tp9" firstAttribute="top" secondItem="HRT-Yb-zq8" secondAttribute="top" constant="5" id="8tC-8d-UxS"/>
-                            <constraint firstItem="HRT-Yb-zq8" firstAttribute="trailing" secondItem="Dfu-Pt-Tp9" secondAttribute="trailing" constant="5" id="FfU-pS-odD"/>
-                            <constraint firstItem="Dfu-Pt-Tp9" firstAttribute="leading" secondItem="HRT-Yb-zq8" secondAttribute="leading" constant="5" id="khE-Sz-n3Y"/>
-                            <constraint firstItem="HRT-Yb-zq8" firstAttribute="bottom" secondItem="Dfu-Pt-Tp9" secondAttribute="bottom" constant="5" id="mRD-To-nYP"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="HRT-Yb-zq8"/>
-                    </view>
-                    <size key="freeformSize" width="300" height="300"/>
-                    <connections>
-                        <outlet property="imageView" destination="Dfu-Pt-Tp9" id="lBu-Vd-l2r"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="xXk-tP-9lP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="920" y="145.72713643178412"/>
         </scene>
     </scenes>
 </document>

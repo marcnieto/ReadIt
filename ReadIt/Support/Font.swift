@@ -10,7 +10,7 @@ import UIKit
 
 class Font {
 
-    // MARK: - Accessing
+    // MARK: - Convenience
 
     static var regular: UIFont {
         return UIFont(name: "HelveticaNeue", size: UIFont.systemFontSize)!

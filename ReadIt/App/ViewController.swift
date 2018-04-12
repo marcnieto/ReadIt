@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
     var isInitialLoading: Bool = true
     static let kInset: CGFloat = 5.0
-    let pageSize: Int = 50
+    let pageSize: Int = 15
 
     var listings: [Listing] = [] {
         didSet {
@@ -202,21 +202,17 @@ extension ViewController: UICollectionViewDataSource {
         // Handles pagination
         let currentPage = Int(indexPath.row / self.pageSize)
 
-        print("\(indexPath.row) / \(self.pageSize) - currentPage = \(currentPage) - \(indexPath.row % self.pageSize) - \(self.listings.count) - \((currentPage * self.pageSize) + self.pageSize)")
-
         if indexPath.row % self.pageSize > (self.pageSize - 2) && self.listings.count == (currentPage * self.pageSize) + self.pageSize {
             let nextPage = currentPage + 1
             let frontIndex = min(self.pageSize * nextPage, self.allListings.count - 1)
             let endIndex = min((self.pageSize * nextPage) + self.pageSize, self.allListings.count - 1)
 
-            print("front Index - \(frontIndex) - endIndex - \(endIndex)")
             guard frontIndex != endIndex else { return }
 
             let nextPageArray = Array(self.allListings[frontIndex..<endIndex])
             self.listings.append(contentsOf: nextPageArray)
         }
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

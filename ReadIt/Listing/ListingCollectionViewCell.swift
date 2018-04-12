@@ -115,9 +115,6 @@ class ListingCollectionViewCell: UICollectionViewCell {
         self.bounceUp()
     }
 
-    // MARK: - Update
-    
-
     // MARK: - Resize
 
     fileprivate func bounceDown() {
