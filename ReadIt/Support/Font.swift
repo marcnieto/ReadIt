@@ -12,8 +12,8 @@ class Font {
 
     // MARK: - Accessing
 
-    static var medium: UIFont {
-        return UIFont(name: "HelveticaNeue-Medium", size: UIFont.systemFontSize)!
+    static var regular: UIFont {
+        return UIFont(name: "HelveticaNeue", size: UIFont.systemFontSize)!
     }
 
     static var thin: UIFont {

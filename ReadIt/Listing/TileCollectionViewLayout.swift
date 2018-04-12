@@ -47,7 +47,6 @@ class TileCollectionViewLayout: UICollectionViewLayout {
         var yOffset = [CGFloat](repeating: 0, count: self.numberOfColumns)
 
         for item in 0 ..< collectionView.numberOfItems(inSection: ViewController.Sections.listings.rawValue) {
-
             let indexPath = IndexPath(item: item, section: ViewController.Sections.listings.rawValue)
 
             let height = delegate.collectionView?(collectionView, layout: self, sizeForItemAt: indexPath).height ?? ListingCollectionViewCell.kDefaultHeight

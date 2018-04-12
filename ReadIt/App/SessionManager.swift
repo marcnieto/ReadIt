@@ -20,7 +20,10 @@ class SessionManager {
 
     func fetchTopListings(limit: Int = 50, completionHandler: @escaping ([Listing]?) -> Void) {
         let urlString = self.apiUrl + "top/.json?limit=\(limit)"
-        guard let url = URL(string: urlString) else { return }
+        guard let url = URL(string: urlString) else {
+            completionHandler(nil)
+            return
+        }
 
         let session = URLSession.shared
         let request = URLRequest(url: url)
@@ -53,4 +56,26 @@ class SessionManager {
         task.resume()
     }
 
+    func downloadImage(from urlString: String, completionHandler: @escaping ((UIImage?) -> Void)) {
+        guard let url = URL(string: urlString) else {
+            completionHandler(nil)
+            return
+        }
+
+        let session = URLSession.shared
+
+        let task = session.dataTask(with: url) { data, response, error in
+            guard let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                  let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                  let data = data, error == nil,
+                  let image = UIImage(data: data) else {
+                    print("Error: Downloading Image")
+                    completionHandler(nil)
+                    return
+            }
+
+            completionHandler(image)
+        }
+        task.resume()
+    }
 }
