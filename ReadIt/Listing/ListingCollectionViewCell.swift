@@ -58,13 +58,30 @@ class ListingCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    var date: String? {
+    var date: Date? {
         didSet {
-            if let date = self.date {
-                self.creationDateLabel.text = date
+            if let oldDate = self.date {
+                // I had to subtract 31 years from the given date to give me the actual date
+                var dayComp = DateComponents()
+                dayComp.year = -31
+                let date = Calendar.current.date(byAdding: dayComp, to: oldDate)!
+
+                let difference = Date().timeIntervalSince(date)
+                let days = (Int(difference) / (3600*24))
+                let hours = (Int(difference) / 3600)
+                let minutes = (Int(difference) / 60)
+
+                if minutes < 60 && minutes > 0 {
+                    self.creationDateLabel.text = "\(minutes) minutes ago"
+                } else if hours < 24 && hours > 0 {
+                    self.creationDateLabel.text = "\(hours) hours ago"
+                } else {
+                    self.creationDateLabel.text = "\(days) days ago"
+                }
             }
         }
     }
+
     // MARK: - UICollectionViewCell
 
     override func awakeFromNib() {
@@ -106,17 +123,13 @@ class ListingCollectionViewCell: UICollectionViewCell {
     fileprivate func bounceDown() {
         UIView.animate(withDuration: 0.1, animations: {
             self.contents.transform = CGAffineTransform(scaleX: 0.95, y: 0.95)
-        }) { _ in
-
-        }
+        })
     }
 
     fileprivate func bounceUp() {
         UIView.animate(withDuration: 0.1, animations: {
             self.contents.transform = CGAffineTransform.identity
-        }) { _ in
-
-        }
+        })
     }
 
     // MARK: - Static
@@ -132,8 +145,6 @@ class ListingCollectionViewCell: UICollectionViewCell {
         let font = Font.bold.withSize(15.0)
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
-
-        print(width)
 
         let attributes: [NSAttributedStringKey: Any] = [.font: font, .paragraphStyle: paragraph]
         let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)

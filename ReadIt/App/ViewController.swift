@@ -16,7 +16,7 @@ class ViewController: UIViewController {
 
     var initialLoad: Bool = true
     static let kInset: CGFloat = 5.0
-    let pageSize: Int = 15
+    let pageSize: Int = 50
 
     var listings: [Listing] = [] {
         didSet {
@@ -36,8 +36,6 @@ class ViewController: UIViewController {
     var allListings: [Listing] = []
 
     var images = [Int: UIImage]()
-    var cells = [Int: ListingCollectionViewCell]()
-    var sizes = [Int: CGSize]()
     fileprivate var imageView: UIImageView!
     fileprivate var imageLocation: CGPoint = .zero
 
@@ -46,11 +44,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: ViewController.kInset, bottom: 0.0, right: ViewController.kInset)
+        self.collectionView.contentInset = UIEdgeInsets(top: 25.0, left: ViewController.kInset, bottom: 0.0, right: ViewController.kInset)
 
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        self.collectionView.isPagingEnabled = true
 
         if let layout = self.collectionView.collectionViewLayout as? TileCollectionViewLayout {
             layout.delegate = self
@@ -64,9 +61,17 @@ class ViewController: UIViewController {
             guard let strongSelf = self else { return }
 
             guard let listings = listings else { return }
-            strongSelf.listings = listings
-//            strongSelf.listings = Array(strongSelf.allListings[0..<strongSelf.pageSize])
+            strongSelf.allListings = listings
+            strongSelf.listings = Array(strongSelf.allListings[0..<strongSelf.pageSize])
         }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        guard let layout = self.collectionView.collectionViewLayout as? TileCollectionViewLayout else {
+            return
+        }
+        layout.invalidateLayout()
     }
 
     // MARK: - Actions
@@ -133,8 +138,6 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch Sections(rawValue: indexPath.section)! {
         case .listings:
-            guard self.cells[indexPath.row] == nil else { return self.cells[indexPath.row]! }
-
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListingCollectionViewCell.reuseIdentifier, for: indexPath) as! ListingCollectionViewCell
 
             let listing = self.listings[indexPath.row]
@@ -142,22 +145,11 @@ extension ViewController: UICollectionViewDataSource {
             cell.title = listing.data.title
             cell.author = listing.data.author
             cell.numberOfComments = listing.data.numberOfComments
-            cell.date = "22 hours ago"
-
-//            cell.titleLabel.text = listing.data.title
-//            cell.authorLabel.text = "- \(listing.data.author) -"
-//            cell.commentsLabel.text = "\(listing.data.numberOfComments) comments"
-//            cell.creationDateLabel.text = "22 hours ago"
+            cell.date = listing.data.created
 
             cell.imageHandler = { [weak self] touch, image in
                 guard let strongSelf = self else { return }
                 let touchLocation = touch.location(in: strongSelf.view)
-//                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//                let imageViewController = storyboard.instantiateViewController(withIdentifier: "imageViewController") as! ImageViewController
-//                imageViewController.initialLocation = touchLocation
-//                imageViewController.image = image
-//                strongSelf.present(imageViewController, animated: true, completion: nil)
-
                 strongSelf.showImage(image, location: touchLocation)
             }
 
@@ -176,10 +168,10 @@ extension ViewController: UICollectionViewDataSource {
                         DispatchQueue.main.async {
                             cell.thumbnailImageView.image = image
                         }
-                        strongSelf.cells[indexPath.row] = cell
                     }
                 } else {
                     cell.thumbnailImageView.image = UIImage(named: "gray")
+                    cell.imageHandler = nil
                 }
             }
             
@@ -187,18 +179,23 @@ extension ViewController: UICollectionViewDataSource {
         }
     }
 
-//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-//        let currentPage = Int(indexPath.row / self.pageSize)
-//        if indexPath.row % self.pageSize > 13 && self.listings.count == (currentPage * self.pageSize) + self.pageSize {
-//            let nextPage = currentPage + 1
-//            let frontIndex = min(self.pageSize * nextPage, self.allListings.count - 1)
-//            let endIndex = min((self.pageSize * nextPage) + self.pageSize, self.allListings.count - 1)
-//            let nextPageArray = Array(self.allListings[frontIndex..<endIndex])
-//            self.listings.append(contentsOf: nextPageArray)
-//            print(self.listings.count)
-//        }
-//        print("calls this - \(indexPath.row)")
-//    }
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+
+        // Handles pagination
+
+        let currentPage = Int(indexPath.row / self.pageSize)
+
+        if indexPath.row % self.pageSize > (self.pageSize - 5) && self.listings.count == (currentPage * self.pageSize) + self.pageSize {
+            let nextPage = currentPage + 1
+            let frontIndex = min(self.pageSize * nextPage, self.allListings.count - 1)
+            let endIndex = min((self.pageSize * nextPage) + self.pageSize, self.allListings.count - 1)
+
+            guard frontIndex != endIndex else { return }
+
+            let nextPageArray = Array(self.allListings[frontIndex..<endIndex])
+            self.listings.append(contentsOf: nextPageArray)
+        }
+    }
 
 }
 
@@ -208,14 +205,11 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         switch Sections(rawValue: indexPath.section)! {
         case .listings:
-            guard self.sizes[indexPath.row] == nil else { return self.sizes[indexPath.row]! }
-
             let listing = self.listings[indexPath.row]
             let width = (AppDelegate.shared.screenWidth - (6 * ViewController.kInset)) / 2.0
             let height = ListingCollectionViewCell.height(forTitle: listing.data.title,
                                                           cellWidth: width)
             let size = CGSize(width: width, height: height)
-            self.sizes[indexPath.row] = size
 
             return size
         }
