@@ -14,20 +14,24 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var initialLoad: Bool = true
+    var isInitialLoading: Bool = true
     static let kInset: CGFloat = 5.0
     let pageSize: Int = 50
 
     var listings: [Listing] = [] {
         didSet {
             if let collectionView = self.collectionView {
-                if self.initialLoad {
-                    DispatchQueue.main.sync {
+                if self.isInitialLoading {
+                    DispatchQueue.main.async {
                         collectionView.reloadData()
                     }
-                    self.initialLoad = false
+                    self.isInitialLoading = false
                 } else {
-                    collectionView.reloadData()
+
+                    DispatchQueue.main.async {
+                        collectionView.reloadData()
+                    }
+
                 }
             }
         }
@@ -36,6 +40,7 @@ class ViewController: UIViewController {
     var allListings: [Listing] = []
 
     var images = [Int: UIImage]()
+    fileprivate var dimmingView: UIView!
     fileprivate var imageView: UIImageView!
     fileprivate var imageLocation: CGPoint = .zero
 
@@ -66,19 +71,20 @@ class ViewController: UIViewController {
         }
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        guard let layout = self.collectionView.collectionViewLayout as? TileCollectionViewLayout else {
-            return
-        }
-        layout.invalidateLayout()
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
 
     // MARK: - Actions
 
     fileprivate func showImage(_ image: UIImage, location: CGPoint) {
+        let dimmingView = UIView(frame: self.view.bounds)
+        dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        dimmingView.alpha = 0.0
+
         let imageView = UIImageView(frame: CGRect(x: 20.0, y: 20.0, width: AppDelegate.shared.screenWidth - 40.0, height: AppDelegate.shared.screenHeight - 40.0))
         imageView.layer.cornerRadius = 10.0
+        imageView.clipsToBounds = true
         imageView.layer.masksToBounds = true
         imageView.contentMode = .scaleAspectFit
         imageView.image = image
@@ -87,33 +93,40 @@ class ViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissImage(_:)))
         imageView.addGestureRecognizer(tapGesture)
 
-        imageView.alpha = 0.0
-        self.view.addSubview(imageView)
+        imageView.alpha = 0.3
+
+        dimmingView.addSubview(imageView)
+        self.view.addSubview(dimmingView)
 
         imageView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
         imageView.center = location
 
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.4) {
             imageView.transform = .identity
             imageView.alpha = 1.0
+            dimmingView.alpha = 1.0
             imageView.center = self.view.center
         }
 
+        self.dimmingView = dimmingView
         self.imageView = imageView
         self.imageLocation = location
     }
 
     @objc func dismissImage(_ sender: Any?) {
+        let dimmingView = self.dimmingView!
         let imageView = self.imageView!
         let location = self.imageLocation
 
-        UIView.animate(withDuration: 0.5) {
+        UIView.animate(withDuration: 0.4, animations: {
             imageView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
-            imageView.alpha = 0.0
+            imageView.alpha = 0.3
+            dimmingView.alpha = 0.0
             imageView.center = location
+        }) { _ in
+            self.dimmingView.removeFromSuperview()
+            self.imageView.removeFromSuperview()
         }
-
-        self.imageView.removeFromSuperview()
     }
 }
 
@@ -131,7 +144,6 @@ extension ViewController: UICollectionViewDataSource {
         switch Sections(rawValue: section)! {
         case .listings:
             return self.listings.count
-
         }
     }
 
@@ -181,15 +193,23 @@ extension ViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
 
-        // Handles pagination
+        let animation = CABasicAnimation(keyPath: "opacity")
+        animation.duration = 0.4
+        animation.fromValue = 0.0
+        animation.toValue = 1.0
+        cell.layer.add(animation, forKey: "opacity")
 
+        // Handles pagination
         let currentPage = Int(indexPath.row / self.pageSize)
 
-        if indexPath.row % self.pageSize > (self.pageSize - 5) && self.listings.count == (currentPage * self.pageSize) + self.pageSize {
+        print("\(indexPath.row) / \(self.pageSize) - currentPage = \(currentPage) - \(indexPath.row % self.pageSize) - \(self.listings.count) - \((currentPage * self.pageSize) + self.pageSize)")
+
+        if indexPath.row % self.pageSize > (self.pageSize - 2) && self.listings.count == (currentPage * self.pageSize) + self.pageSize {
             let nextPage = currentPage + 1
             let frontIndex = min(self.pageSize * nextPage, self.allListings.count - 1)
             let endIndex = min((self.pageSize * nextPage) + self.pageSize, self.allListings.count - 1)
 
+            print("front Index - \(frontIndex) - endIndex - \(endIndex)")
             guard frontIndex != endIndex else { return }
 
             let nextPageArray = Array(self.allListings[frontIndex..<endIndex])

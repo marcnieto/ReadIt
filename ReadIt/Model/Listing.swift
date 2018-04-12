@@ -23,7 +23,7 @@ struct ListingData: Decodable {
     enum CodingKeys: String, CodingKey {
         case title
         case author
-        case created
+        case created = "created_utc"
         case thumbnail
         case numberOfComments = "num_comments"
     }

@@ -8,11 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1E088CA8207E037500FDAB23 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CA7207E037500FDAB23 /* Date+Extension.swift */; };
-		1E088CAC207F07CF00FDAB23 /* LoadingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CAB207F07CF00FDAB23 /* LoadingCollectionViewCell.swift */; };
 		1E088CAE207F140B00FDAB23 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CAD207F140B00FDAB23 /* Font.swift */; };
 		1E088CB0207F1A8A00FDAB23 /* TileCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CAF207F1A8A00FDAB23 /* TileCollectionViewLayout.swift */; };
-		1E088CB3207F72ED00FDAB23 /* ImagePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CB2207F72ED00FDAB23 /* ImagePresentationController.swift */; };
-		1E088CB5207F752B00FDAB23 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CB4207F752B00FDAB23 /* ImageViewController.swift */; };
 		1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */; };
 		1E7D21C4207FB858006648E3 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E7D21C2207FB858006648E3 /* Images.xcassets */; };
 		1E9D3B21207CACBD00CEC02F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D3B20207CACBD00CEC02F /* AppDelegate.swift */; };
@@ -26,11 +23,8 @@
 
 /* Begin PBXFileReference section */
 		1E088CA7207E037500FDAB23 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
-		1E088CAB207F07CF00FDAB23 /* LoadingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionViewCell.swift; sourceTree = "<group>"; };
 		1E088CAD207F140B00FDAB23 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		1E088CAF207F1A8A00FDAB23 /* TileCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileCollectionViewLayout.swift; sourceTree = "<group>"; };
-		1E088CB2207F72ED00FDAB23 /* ImagePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresentationController.swift; sourceTree = "<group>"; };
-		1E088CB4207F752B00FDAB23 /* ImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
 		1E7D21C3207FB858006648E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Base; path = ReadIt/Base.lproj/Images.xcassets; sourceTree = "<group>"; };
 		1E9D3B1D207CACBD00CEC02F /* ReadIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,20 +49,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1E088CB1207F728A00FDAB23 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				1E088CB2207F72ED00FDAB23 /* ImagePresentationController.swift */,
-				1E088CB4207F752B00FDAB23 /* ImageViewController.swift */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
 		1E424F08207DE84C00F2FF9A /* Listing */ = {
 			isa = PBXGroup;
 			children = (
 				1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */,
-				1E088CAB207F07CF00FDAB23 /* LoadingCollectionViewCell.swift */,
 				1E088CAF207F1A8A00FDAB23 /* TileCollectionViewLayout.swift */,
 			);
 			path = Listing;
@@ -96,7 +80,6 @@
 			children = (
 				1E9D3B32207CADBD00CEC02F /* App */,
 				1E424F08207DE84C00F2FF9A /* Listing */,
-				1E088CB1207F728A00FDAB23 /* Image */,
 				1E9D3B34207CAE0500CEC02F /* Model */,
 				1E9D3B33207CADE000CEC02F /* Support */,
 				1E9D3B27207CACC000CEC02F /* Assets.xcassets */,
@@ -209,13 +192,10 @@
 				1E9D3B23207CACBD00CEC02F /* ViewController.swift in Sources */,
 				1E9D3B21207CACBD00CEC02F /* AppDelegate.swift in Sources */,
 				1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */,
-				1E088CAC207F07CF00FDAB23 /* LoadingCollectionViewCell.swift in Sources */,
 				1E088CB0207F1A8A00FDAB23 /* TileCollectionViewLayout.swift in Sources */,
-				1E088CB3207F72ED00FDAB23 /* ImagePresentationController.swift in Sources */,
 				1E088CA8207E037500FDAB23 /* Date+Extension.swift in Sources */,
 				1E9D3B38207CB06700CEC02F /* Listing.swift in Sources */,
 				1E088CAE207F140B00FDAB23 /* Font.swift in Sources */,
-				1E088CB5207F752B00FDAB23 /* ImageViewController.swift in Sources */,
 				1E9D3B36207CAE8100CEC02F /* SessionManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

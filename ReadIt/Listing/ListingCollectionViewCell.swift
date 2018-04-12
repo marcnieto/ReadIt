@@ -47,7 +47,7 @@ class ListingCollectionViewCell: UICollectionViewCell {
     var author: String? {
         didSet {
             if let author = self.author {
-                self.authorLabel.text = author
+                self.authorLabel.text = "- \(author) -"
             }
         }
     }

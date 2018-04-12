@@ -34,7 +34,7 @@ class TileCollectionViewLayout: UICollectionViewLayout {
     }
 
     override func prepare() {
-        guard self.cache.isEmpty == true, let collectionView = self.collectionView else {
+        guard let collectionView = self.collectionView else {
             return
         }
 
