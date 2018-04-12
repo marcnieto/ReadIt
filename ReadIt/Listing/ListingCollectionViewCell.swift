@@ -12,13 +12,33 @@ class ListingCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Accessing
 
+    @IBOutlet weak var contents: UIView!
     @IBOutlet weak var thumbnailImageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var creationDateLabel: UILabel!
     @IBOutlet weak var commentsLabel: UILabel!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
+    var isLoading: Bool = false {
+        didSet {
+            _ = self.isLoading ? self.activityIndicator.startAnimating() : self.activityIndicator.stopAnimating()
+        }
+    }
+
+    static let reuseIdentifier = "listingCollectionViewCell"
 
     // MARK: - UICollectionViewCell
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+        self.activityIndicator.hidesWhenStopped = true
+        self.backgroundColor = .clear
+        self.contents.layer.cornerRadius = 5.0
+        self.contents.layer.shadowRadius = 3.0
+        self.contents.layer.shadowColor = UIColor.lightGray.cgColor
+    }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -38,11 +58,19 @@ class ListingCollectionViewCell: UICollectionViewCell {
     // MARK: - Resize
 
     fileprivate func bounceDown() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.contents.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
+        }) { _ in
 
+        }
     }
 
     fileprivate func bounceUp() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.contents.transform = CGAffineTransform.identity
+        }) { _ in
 
+        }
     }
 
     // MARK: - Static
@@ -54,15 +82,13 @@ class ListingCollectionViewCell: UICollectionViewCell {
         let width = UIScreen.main.bounds.width / 2.0
 
         let string = title as NSString
-        if let font = UIFont(name: "HelveticaNeue-Regular", size: 16.0) {
-            let attributes: [NSAttributedStringKey: Any] = [.font: font]
-            let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
-            let rect = string.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
-            let height = ceil(rect.size.height)
+        let font = Font.medium.withSize(17.0)
 
-            return ListingCollectionViewCell.kDefaultHeight - ListingCollectionViewCell.kDefaultTitleLabelHeight + height
-        }
+        let attributes: [NSAttributedStringKey: Any] = [.font: font]
+        let size = CGSize(width: width, height: CGFloat.greatestFiniteMagnitude)
+        let rect = string.boundingRect(with: size, options: NSStringDrawingOptions.usesLineFragmentOrigin, attributes: attributes, context: nil)
+        let height = ceil(rect.size.height)
 
-        return kDefaultHeight
+        return ListingCollectionViewCell.kDefaultHeight - ListingCollectionViewCell.kDefaultTitleLabelHeight + height
     }
 }

@@ -14,16 +14,31 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var listings: [Listing]?
+    var listings: [Listing] = [] {
+        didSet {
+            if let collectionView = self.collectionView {
+                DispatchQueue.main.sync {
+                    collectionView.reloadData()
+                }
+            }
+        }
+    }
     var isLoading: Bool = false
+    static let kInset: CGFloat = 5.0
 
     // MARK: - UIViewController
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.collectionView.contentInset = UIEdgeInsets(top: 0.0, left: ViewController.kInset, bottom: 0.0, right: ViewController.kInset)
+
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+
+        if let layout = self.collectionView.collectionViewLayout as? TileCollectionViewLayout {
+            layout.delegate = self
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -31,11 +46,14 @@ class ViewController: UIViewController {
         SessionManager.shared.fetchTopListings { [weak self] listings in
             guard let strongSelf = self else { return }
             strongSelf.isLoading = false
+
+            guard let listings = listings else { return }
             strongSelf.listings = listings
-            strongSelf.collectionView.reloadData()
         }
     }
 }
+
+// MARK: - UICollectionViewDataSource
 
 extension ViewController: UICollectionViewDataSource {
 
@@ -49,22 +67,42 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch Sections(rawValue: section)! {
         case .listings:
-            guard let listings = self.listings else { return 0 }
-            return listings.count
+            return self.listings.count
         case .loading:
             return self.isLoading ? 1 : 0
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "listingCollectionViewCell", for: indexPath) as! ListingCollectionViewCell
-        return cell
+        switch Sections(rawValue: indexPath.section)! {
+        case .listings:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListingCollectionViewCell.reuseIdentifier, for: indexPath) as! ListingCollectionViewCell
+            let listing = self.listings[indexPath.row]
+
+            cell.titleLabel.text = listing.data.title
+            return cell
+        case .loading:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LoadingCollectionViewCell.reuseIdentifier, for: indexPath) as! LoadingCollectionViewCell
+            cell.isLoading = self.isLoading
+            return cell
+        }
     }
     
 }
 
-extension ViewController: UICollectionViewDelegate {
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension ViewController: UICollectionViewDelegateFlowLayout {
      func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .zero
+        switch Sections(rawValue: indexPath.section)! {
+        case .listings:
+            let listing = self.listings[indexPath.row]
+            let width = (AppDelegate.shared.screenWidth - (3 * ViewController.kInset)) / 2.0
+            let height = ListingCollectionViewCell.height(forTitle: listing.data.title)
+
+            return CGSize(width: width, height: height)
+        case .loading:
+            return CGSize(width: AppDelegate.shared.screenWidth, height: 100.0)
+        }
     }
 }

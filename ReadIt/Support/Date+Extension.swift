@@ -1,5 +1,5 @@
 //
-//  Extension.swift
+//  Date+Extension.swift
 //  ReadIt
 //
 //  Created by Marc Nieto on 4/11/18.
