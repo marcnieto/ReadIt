@@ -38,6 +38,7 @@ class ViewController: UIViewController {
     fileprivate var dimmingView: UIView!
     fileprivate var imageView: UIImageView!
     fileprivate var imageLocation: CGPoint = .zero
+    fileprivate var isImagePresented: Bool = false
 
     // MARK: - UIViewController
 
@@ -70,9 +71,17 @@ class ViewController: UIViewController {
         self.collectionView.collectionViewLayout.invalidateLayout()
     }
 
-    // MARK: - Actions
+    // MARK: - Image
+
+    /* Note: I would've much rather used UIPresentationController for the image presentation.
+       For whatever reason, the transitioning delegate never gets called. Had to settle for this
+       backup.
+     */
 
     fileprivate func showImage(_ image: UIImage, location: CGPoint) {
+        guard !self.isImagePresented else { return }
+        self.isImagePresented = true
+
         let dimmingView = UIView(frame: self.view.bounds)
         dimmingView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         dimmingView.alpha = 0.0
@@ -119,6 +128,7 @@ class ViewController: UIViewController {
             dimmingView.alpha = 0.0
             imageView.center = location
         }) { _ in
+            self.isImagePresented = false
             self.dimmingView.removeFromSuperview()
             self.imageView.removeFromSuperview()
         }

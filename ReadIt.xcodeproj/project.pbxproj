@@ -10,7 +10,6 @@
 		1E088CAE207F140B00FDAB23 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CAD207F140B00FDAB23 /* Font.swift */; };
 		1E088CB0207F1A8A00FDAB23 /* TileCollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E088CAF207F1A8A00FDAB23 /* TileCollectionViewLayout.swift */; };
 		1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */; };
-		1E681F77208423EF0071F20A /* ImagePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E681F76208423EF0071F20A /* ImagePresentationController.swift */; };
 		1E9D3B21207CACBD00CEC02F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D3B20207CACBD00CEC02F /* AppDelegate.swift */; };
 		1E9D3B23207CACBD00CEC02F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E9D3B22207CACBD00CEC02F /* ViewController.swift */; };
 		1E9D3B26207CACBD00CEC02F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E9D3B24207CACBD00CEC02F /* Main.storyboard */; };
@@ -24,7 +23,6 @@
 		1E088CAD207F140B00FDAB23 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
 		1E088CAF207F1A8A00FDAB23 /* TileCollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileCollectionViewLayout.swift; sourceTree = "<group>"; };
 		1E424F09207DE86700F2FF9A /* ListingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListingCollectionViewCell.swift; sourceTree = "<group>"; };
-		1E681F76208423EF0071F20A /* ImagePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePresentationController.swift; sourceTree = "<group>"; };
 		1E9D3B1D207CACBD00CEC02F /* ReadIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ReadIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E9D3B20207CACBD00CEC02F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E9D3B22207CACBD00CEC02F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,14 +54,6 @@
 			path = Listing;
 			sourceTree = "<group>";
 		};
-		1E681F75208423D30071F20A /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				1E681F76208423EF0071F20A /* ImagePresentationController.swift */,
-			);
-			path = Image;
-			sourceTree = "<group>";
-		};
 		1E9D3B14207CACBC00CEC02F = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +75,6 @@
 			children = (
 				1E9D3B32207CADBD00CEC02F /* App */,
 				1E424F08207DE84C00F2FF9A /* Listing */,
-				1E681F75208423D30071F20A /* Image */,
 				1E9D3B34207CAE0500CEC02F /* Model */,
 				1E9D3B33207CADE000CEC02F /* Support */,
 				1E9D3B2C207CACC000CEC02F /* Info.plist */,
@@ -198,7 +187,6 @@
 				1E424F0A207DE86700F2FF9A /* ListingCollectionViewCell.swift in Sources */,
 				1E088CB0207F1A8A00FDAB23 /* TileCollectionViewLayout.swift in Sources */,
 				1E9D3B38207CB06700CEC02F /* Listing.swift in Sources */,
-				1E681F77208423EF0071F20A /* ImagePresentationController.swift in Sources */,
 				1E088CAE207F140B00FDAB23 /* Font.swift in Sources */,
 				1E9D3B36207CAE8100CEC02F /* SessionManager.swift in Sources */,
 			);
