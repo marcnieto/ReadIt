@@ -5,7 +5,6 @@
 //  Created by Marc Nieto on 4/11/18.
 //  Copyright © 2018 Marc Nieto. All rights reserved.
 //
-//  Inspired by PinterestView Layout by Ray Wenderlich
 //
 
 import UIKit
@@ -38,13 +37,17 @@ class TileCollectionViewLayout: UICollectionViewLayout {
             return
         }
 
+        self.numberOfColumns = UIApplication.shared.statusBarOrientation == .portrait ? 2 : 3
+
         let columnWidth = self.contentWidth / CGFloat(self.numberOfColumns)
         var xOffset = [CGFloat]()
+        var yOffset = [CGFloat]()
+        var column = 0
+
         for column in 0 ..< self.numberOfColumns {
             xOffset.append(CGFloat(column) * columnWidth)
+            yOffset.append(0)
         }
-        var column = 0
-        var yOffset = [CGFloat](repeating: 0, count: self.numberOfColumns)
 
         for item in 0 ..< collectionView.numberOfItems(inSection: ViewController.Sections.listings.rawValue) {
             let indexPath = IndexPath(item: item, section: ViewController.Sections.listings.rawValue)
@@ -59,6 +62,8 @@ class TileCollectionViewLayout: UICollectionViewLayout {
             self.cache.append(attributes)
 
             self.contentHeight = max(self.contentHeight, frame.maxY)
+
+            /* Tracks the accumulated y offset for each column */
             yOffset[column] = yOffset[column] + height
 
             column = column < (self.numberOfColumns - 1) ? (column + 1) : 0

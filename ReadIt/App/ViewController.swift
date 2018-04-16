@@ -22,16 +22,11 @@ class ViewController: UIViewController {
         didSet {
             if let collectionView = self.collectionView {
                 if self.isInitialLoading {
-                    DispatchQueue.main.async {
-                        collectionView.reloadData()
-                    }
                     self.isInitialLoading = false
-                } else {
+                }
 
-                    DispatchQueue.main.async {
-                        collectionView.reloadData()
-                    }
-
+                DispatchQueue.main.async {
+                    collectionView.reloadData()
                 }
             }
         }
@@ -166,9 +161,7 @@ extension ViewController: UICollectionViewDataSource {
             }
 
             if let image = self.images[indexPath.row] {
-                DispatchQueue.main.async {
-                    cell.thumbnailImageView.image = image
-                }
+                cell.image = image
             } else {
                 if UIApplication.shared.canOpenURL(URL(string: listing.data.thumbnail)!) {
                     SessionManager.shared.downloadImage(from: listing.data.thumbnail) { [weak self] image in
@@ -176,13 +169,10 @@ extension ViewController: UICollectionViewDataSource {
                         guard let strongSelf = self else { return }
 
                         strongSelf.images[indexPath.row] = image
-
-                        DispatchQueue.main.async {
-                            cell.thumbnailImageView.image = image
-                        }
+                        cell.image = image
                     }
                 } else {
-                    cell.thumbnailImageView.image = UIImage(named: "gray")
+                    cell.image = UIImage(named: "gray")
                     cell.imageHandler = nil
                 }
             }
@@ -222,7 +212,9 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         switch Sections(rawValue: indexPath.section)! {
         case .listings:
             let listing = self.listings[indexPath.row]
-            let width = (AppDelegate.shared.screenWidth - (6 * ViewController.kInset)) / 2.0
+            let numberOfColumns = CGFloat(UIApplication.shared.statusBarOrientation == .portrait ? 2 : 3)
+            let numberOfInsets = CGFloat(2 + (numberOfColumns * 2))
+            let width = (AppDelegate.shared.screenWidth - (numberOfInsets * ViewController.kInset)) / numberOfColumns
             let height = ListingCollectionViewCell.height(forTitle: listing.data.title,
                                                           cellWidth: width)
             let size = CGSize(width: width, height: height)
